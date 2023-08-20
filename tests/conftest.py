@@ -22,16 +22,21 @@ def password():
     return os.getenv("PASSWORD")
 
 
+@pytest.fixture(scope="session")
+def new_password():
+    return os.getenv("NEW_PASSWORD")
+
+
 @pytest.fixture
 def notes_service():
     return NotesRest()
 
 
-# @pytest.fixture
-# def authenticated_notes_service(notes_service, email, password):
-#     notes_service.post_users_login(email, password)
-#
-#     return notes_service
+@pytest.fixture
+def authenticated_notes_service(registration, email, password):
+    registration.post_users_login(email, password)
+    yield registration
+    registration.delete_user_account()
 
 
 @pytest.fixture
@@ -45,7 +50,8 @@ def prepared_note(authenticated_notes_service) -> dict:
     )
     logger.info(f"Note prepared: {response['data']}")
 
-    return response["data"]
+    return response["data"], authenticated_notes_service
+
 
 @pytest.fixture
 def registration(notes_service, name, email, password):
@@ -81,3 +87,10 @@ def registration_login_deleting(registration, email, password):
     logger.info("Deleting account")
     delete = registration.delete_user_account()
     logger.info(delete["message"])
+
+
+@pytest.fixture
+def registration_login_login_deleting(registration_login_deleting, email, password):
+    yield registration_login_deleting
+    logger.info("Log in")
+    registration_login_deleting.post_users_login(email, password)

@@ -105,7 +105,7 @@ class RestClient:
         url = self.BASE_URL + path
         headers = headers or self._headers
         self._log.info(f"PUT request to {url}")
-        response = requests.delete(url, headers=headers, **kwargs)
+        response = requests.put(url, headers=headers, **kwargs)
 
         assert response.status_code == expected_status_code
 
