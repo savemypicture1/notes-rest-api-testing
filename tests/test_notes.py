@@ -1,6 +1,5 @@
 import pytest
 
-
 @pytest.mark.parametrize("category", ["Home", "Work", "Personal"])
 def test_create_note(authenticated_notes_service, category):
     title = "Test note"
