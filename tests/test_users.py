@@ -1,6 +1,3 @@
-# def test_kurwa(log_in_with_deleting_account_for_registration):
-#     print('kurwa')
-
 
 def test_registration(log_in_with_deleting_account_for_registration, name, email, password):
     response = log_in_with_deleting_account_for_registration.post_users_register(name, email, password)
