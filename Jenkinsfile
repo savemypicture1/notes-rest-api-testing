@@ -20,7 +20,7 @@ pipeline {
         }
         stage("Testing") {
             steps {
-                bat "pytest"
+                bat "python -m pytest"
             }
         }
     }
