@@ -5,6 +5,7 @@ pipeline {
         EMAIL=credentials("email")
         PASSWORD=credentials("password")
         NEW_PASSWORD=credentials("new_password")
+        MARKER=credentials("marker")
     }
     stages {
         stage("Clone repository") {
@@ -26,7 +27,7 @@ pipeline {
         }
         stage("Testing") {
             steps {
-                bat "python -m pytest --junitxml=report.xml"
+                bat "python -m pytest -m ${env.MARKER} --junitxml=report.xml"
             }
         }
     }
