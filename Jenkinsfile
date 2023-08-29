@@ -1,5 +1,11 @@
 pipeline {
     agent any
+    environment {
+        NAME=credentials("name")
+        EMAIL=credentials("email")
+        PASSWORD=credentials("password")
+        NEW_PASSWORD=credentials("new_password")
+    }
     stages {
         stage("Clone repository") {
             steps {
