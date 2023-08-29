@@ -6,5 +6,15 @@ pipeline {
                 git branch: "main", url: "https://github.com/savemypicture1/notes-rest-api-testing"
             }
         }
+        stage("Setup environment") {
+            steps {
+                bat "python -m pip install -r requirements.txt"
+            }
+        }
+        stage("Testing") {
+            steps {
+                bat "pytest"
+            }
+        }
     }
 }
