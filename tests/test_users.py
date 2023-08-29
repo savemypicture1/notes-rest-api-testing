@@ -1,16 +1,21 @@
+import pytest
 
+
+@pytest.mark.marker
 def test_registration(log_in_with_deleting_account_for_registration, name, email, password):
     response = log_in_with_deleting_account_for_registration.post_users_register(name, email, password)
 
     assert response["success"] is True
 
 
+@pytest.mark.marker
 def test_registration_with_invalid_credentials(notes_service, name, password):
     response = notes_service.post_users_register(name, "invalidemail.com", password, expected_status_code=400)
 
     assert response["success"] is False
 
 
+@pytest.mark.marker
 def test_login(registration_with_deleting_account, email, password):
     response = registration_with_deleting_account.post_users_login(email, password)
 
